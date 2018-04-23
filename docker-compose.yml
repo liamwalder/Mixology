@@ -1,0 +1,44 @@
+version: '3'
+services:
+
+    nginx:
+        container_name: CocktailApiNginx
+        image: nginx:latest
+        ports:
+          - "80:80"
+        links:
+          - php
+        volumes:
+          - ./:/var/www/Cocktail
+          - ./images/nginx/vhost.conf:/etc/nginx/conf.d/Cocktail.conf
+        working_dir:
+          /var/www/Cocktail
+
+    php:
+        container_name: CocktailApiPHPFPM
+        build: ./images/php-fpm
+        ports:
+          - "9000:9000"
+        links:
+          - db
+        volumes:
+          - ./:/var/www/Cocktail
+          - ./images/php-fpm/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+        working_dir:
+          /var/www/Cocktail
+
+    db:
+        container_name: CocktailApiDatabase
+        image: mysql:5.7
+        ports:
+          - "3306:3306"
+        volumes:
+          - data:/var/lib/mysql
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: Cocktail
+          MYSQL_USER: Cocktail
+          MYSQL_PASSWORD: Cocktail
+
+volumes:
+  data:
