@@ -31,7 +31,7 @@ class CocktailController extends Controller
 
         foreach ($request->get('ingredients') as $ingredient) {
             $ingredient = $ingredientRepository->getIngredient($ingredient);
-            $cocktailsByIngredients[$ingredient->name] = $cocktailDBService->getCocktailsByIngredient($ingredient->name)['drinks'];
+            $cocktailsByIngredients[$ingredient->name] = $ingredient->cocktails;
         }
 
         $cocktails = $cocktailService->collateCocktails($cocktailsByIngredients);

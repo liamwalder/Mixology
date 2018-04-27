@@ -75,7 +75,7 @@ class Cocktail
         foreach ($cocktails as $ingredient => $drinks) {
             foreach ($drinks as $drink) {
 
-                $drinkId = $drink['idDrink'];
+                $drinkId = $drink->drink_id;
 
                  /**
                   * First occurrence of drink
