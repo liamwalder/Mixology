@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Ingredient;
 use App\Repositories\IngredientRepository;
 use App\Services\CocktailDB;
 use Illuminate\Http\Request;
@@ -22,11 +23,13 @@ class IngredientController extends Controller {
         Request $request,
         IngredientRepository $ingredientRepository
     ) {
-        $ingredients = $ingredientRepository->getAllIngredients();
-        return response()->json($ingredients);
+        $allIngredients = $ingredientRepository->getAllIngredients();
+        $mostPopularIngredients = $ingredientRepository->getMostPopularIngredients();
+        return response()->json([
+            'all' => $allIngredients,
+            'popular' => $mostPopularIngredients
+        ]);
     }
-
-
 
     /**
      * @param Request $request

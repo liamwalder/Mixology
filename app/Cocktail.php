@@ -16,8 +16,14 @@ class Cocktail extends Model
     /**
      * @var array
      */
-    protected $fillable = [
-        'drink_id', 'data'
-    ];
+    protected $fillable = ['drink_id', 'data'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class);
+    }
 
 }

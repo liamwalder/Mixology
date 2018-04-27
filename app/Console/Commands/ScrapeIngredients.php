@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Ingredient;
+use App\Repositories\CocktailRepository;
 use App\Services\Cocktail;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
@@ -14,23 +15,17 @@ use Illuminate\Console\Command;
 class ScrapeIngredients extends Command
 {
     /**
-     * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = 'scrape:ingredients';
 
     /**
-     * The console command description.
-     *
      * @var string
      */
-    protected $description = 'Scrape Ingredients';
+    protected $description = 'Scrape cocktails and ingredients.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * ScrapeIngredients constructor.
      */
     public function __construct()
     {
@@ -42,7 +37,7 @@ class ScrapeIngredients extends Command
      *
      * @return mixed
      */
-    public function handle(Cocktail $cocktailService, Client $client)
+    public function handle(Cocktail $cocktailService, Client $client, CocktailRepository $cocktailRepository)
     {
         $drinksIdRange = range(10000, 20000);
 
@@ -62,6 +57,21 @@ class ScrapeIngredients extends Command
 
                 $drink = $drink[0];
 
+
+                /**
+                 * Check to see if we have the cocktail saved and if we don't,
+                 * we can save the cocktail.
+                 */
+                $drinkId = $drink['idDrink'];
+                $cocktail = $cocktailRepository->getCocktailByDrinkId($drinkId);
+                if (!$cocktail) {
+                    $cocktailRepository->saveCocktail($drink);
+                    $cocktail = $cocktailRepository->getCocktailByDrinkId($drinkId);
+                }
+
+                /**
+                 * Extract and save ingredients
+                 */
                 $ingredients = $cocktailService->extractIngredients($drink);
                 $ingredientsCount = count($ingredients);
 
@@ -69,12 +79,20 @@ class ScrapeIngredients extends Command
 
                 foreach ($ingredients as $ingredient) {
                     $ingredientByName = Ingredient::where('name', $ingredient)->first();
+
                     if (is_null($ingredientByName)) {
                         $newIngredient = new Ingredient();
                         $newIngredient->name = $ingredient;
                         $newIngredient->save();
+                        $ingredientByName = $newIngredient;
                     }
+
+                    if (!$cocktail->ingredients->contains($ingredientByName->id)) {
+                        $cocktail->ingredients()->attach($ingredientByName);
+                    }
+
                 }
+
 
             } else {
                 $this->error("Drunk $i not found");

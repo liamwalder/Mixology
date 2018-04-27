@@ -20,7 +20,6 @@ class CocktailRepository
         return Cocktail::where('drink_id', $drinkId)->first();
     }
 
-
     /**
      * @param $cocktail
      */

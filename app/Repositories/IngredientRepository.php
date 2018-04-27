@@ -21,6 +21,21 @@ class IngredientRepository
         return Ingredient::orderBy('name', 'ASC')->get();
     }
 
+    /**
+     * @param int $limit
+     * @return mixed
+     */
+    public function getMostPopularIngredients($limit = 25)
+    {
+        return \DB::select("
+            SELECT i.id, i.name FROM cocktail_ingredient ci
+            LEFT JOIN ingredients i ON i.id = ci.ingredient_id
+            GROUP BY ingredient_id
+            ORDER BY COUNT(ingredient_id) DESC
+            LIMIT $limit
+        ");
+    }
+
 
     /**
      * @param $ingredient

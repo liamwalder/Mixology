@@ -18,4 +18,13 @@ class Ingredient extends Model
      */
     protected $fillable = ['name'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function cocktails()
+    {
+        return $this->belongsToMany(Cocktail::class);
+    }
+
+
 }
