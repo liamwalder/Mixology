@@ -5,19 +5,21 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateCocktailIngredientTable
+ * Class CreateDrinkIngredientTable
  */
-class CreateCocktailIngredientTable extends Migration
+class CreateDrinkIngredientTable extends Migration
 {
     /**
      *
      */
     public function up()
     {
-        Schema::create('cocktail_ingredient', function (Blueprint $table) {
+        Schema::create('drink_ingredients', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('cocktail_id');
+            $table->string('measure')->nullable();
+            $table->integer('drink_id');
             $table->integer('ingredient_id');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +28,6 @@ class CreateCocktailIngredientTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cocktail_ingredient');
+        Schema::dropIfExists('drink_ingredients');
     }
 }
