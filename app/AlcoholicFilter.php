@@ -7,23 +7,15 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
- * Class Ingredient
+ * Class AlcoholicFilter
  * @package App
  */
-class Ingredient extends Model
+class AlcoholicFilter extends Model
 {
 
     /**
      * @var array
      */
     protected $fillable = ['name'];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function cocktails()
-    {
-        return $this->belongsToMany(Cocktail::class);
-    }
 
 }

@@ -7,15 +7,15 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
- * Class Drink
+ * Class Thumbnail
  * @package App
  */
-class Drink extends Model
+class Thumbnail extends Model
 {
 
     /**
      * @var array
      */
-    protected $fillable = ['name', 'instructions', 'category_id', 'alcoholic_filter_id', 'glass_id', 'thumbnail_id', 'cocktail_db_id'];
+    protected $fillable = ['url', 'drink_id'];
 
 }

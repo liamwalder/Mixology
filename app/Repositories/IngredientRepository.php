@@ -13,12 +13,20 @@ class IngredientRepository
 {
 
     /**
-     * @param $drinkId
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @return mixed
      */
-    public function getAllIngredients()
+    public function findAll()
     {
         return Ingredient::orderBy('name', 'ASC')->get();
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function findByName(string $name)
+    {
+        return Ingredient::where('name', $name)->first();
     }
 
     /**

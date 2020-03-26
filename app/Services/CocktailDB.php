@@ -30,6 +30,62 @@ class CocktailDB
     }
 
     /**
+     * @return mixed
+     */
+    public function getCategories()
+    {
+        $response = $this->client->get($this->baseUrl . "list.php?c=list");
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGlasses()
+    {
+        $response = $this->client->get($this->baseUrl . "list.php?g=list");
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIngredients()
+    {
+        $response = $this->client->get($this->baseUrl . "list.php?i=list");
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAlcoholFilters()
+    {
+        $response = $this->client->get($this->baseUrl . "list.php?a=list");
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * @param string $ingredient
+     * @return mixed
+     */
+    public function getDrinksByIngredient(string $ingredient)
+    {
+        $response = $this->client->get($this->baseUrl . "filter.php?i=" . $ingredient);
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * @param $drinkId
+     * @return mixed
+     */
+    public function getDrink($drinkId)
+    {
+        $response = $this->client->get($this->baseUrl . "lookup.php?i=" . $drinkId);
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
      * @param $query
      * @return string
      */
