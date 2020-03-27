@@ -18,4 +18,12 @@ class AlcoholicFilter extends Model
      */
     protected $fillable = ['name'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function drinks()
+    {
+        return $this->hasMany(Drink::class);
+    }
+
 }

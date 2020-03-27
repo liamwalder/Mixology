@@ -16,6 +16,17 @@ class Thumbnail extends Model
     /**
      * @var array
      */
-    protected $fillable = ['url', 'drink_id'];
+    protected $fillable = [
+        'url',
+        'drink_id'
+    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function drinks()
+    {
+        return $this->hasMany(Drink::class);
+    }
 
 }

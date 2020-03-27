@@ -12,5 +12,8 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('/cocktails', 'Api\CocktailController@getCocktails');
-Route::get('/ingredients', 'Api\IngredientController@getIngredients');
+//Route::post('/cocktails', 'Api\CocktailController@getCocktails');
+Route::post('/drinks/filtered', 'Api\DrinkController@filtered');
+Route::get('/drinks', 'Api\DrinkController@list');
+
+Route::get('/ingredients', 'Api\IngredientController@list');

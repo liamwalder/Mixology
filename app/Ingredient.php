@@ -21,9 +21,17 @@ class Ingredient extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function cocktails()
+    public function drinks()
     {
-        return $this->belongsToMany(Cocktail::class);
+        return $this->belongsToMany(Drink::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function drinkIngredients()
+    {
+        return $this->hasMany(DrinkIngredient::class);
     }
 
 }

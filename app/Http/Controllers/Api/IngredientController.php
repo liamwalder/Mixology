@@ -15,33 +15,16 @@ use Illuminate\Http\Request;
 class IngredientController extends Controller {
 
     /**
-     * @param Request $request
      * @param IngredientRepository $ingredientRepository
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getIngredients(
-        Request $request,
-        IngredientRepository $ingredientRepository
-    ) {
-        $allIngredients = $ingredientRepository->getAllIngredients();
-        $mostPopularIngredients = $ingredientRepository->getMostPopularIngredients();
-        return response()->json([
-            'all' => $allIngredients,
-            'popular' => $mostPopularIngredients
-        ]);
-    }
+    public function list(IngredientRepository $ingredientRepository)
+    {
+        $ingredients = $ingredientRepository->findAll();
 
-    /**
-     * @param Request $request
-     * @param CocktailDB $cocktailDBService
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function searchIngredient(
-        Request $request,
-        CocktailDB $cocktailDBService
-    ) {
-        $cocktails = $cocktailDBService->searchIngredientByName($request->get('search'));
-        return response()->json($cocktails);
+        return response()->json([
+            'ingredients' => $ingredients
+        ]);
     }
 
 }
